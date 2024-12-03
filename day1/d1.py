@@ -9,11 +9,22 @@ def main():
     args = parse_arguments()
     l1, l2 = read_input(args.file)
     
-    sum = 0
-    
+    #--part 1--
+    dist = 0
     for a, b in zip(l1, l2):
-        sum += abs(int(a)-int(b))  
-    print(f"Sum is: {sum}")
+        dist += abs(int(a)-int(b))  
+    print(f"Distance sum is: {dist}")
+    
+    #--part 2--
+    hashmap = {int(k):0 for k in l1}
+    for loc in l2:
+        try:
+            hashmap[int(loc)] += 1
+        except KeyError: #not in l1
+            continue
+    
+    total_similarity = sum(int(k) * int(v) for k, v in zip(hashmap.keys(), hashmap.values()))
+    print("Total Similarity Score", total_similarity)
     return 
     
 def read_input(path):
